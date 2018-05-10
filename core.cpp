@@ -5,8 +5,12 @@
 #include <ai.h>
 #include <ui.h>
 #include <core.h>
+#include <list.h>
+#include <debug.h>
 
-void mainloop(int x,int y,int **A, int **B, bool **AS, bool **BS, bool turn, string PassA, string PassB)
+
+
+void mainloop(int x,int y,int **A, int **B, bool **AS, bool **BS, List *listA, List *listB, bool turn, string PassA, string PassB)
 {
     int scoreA=0,scoreB=0;
     while(true)
@@ -19,10 +23,14 @@ void mainloop(int x,int y,int **A, int **B, bool **AS, bool **BS, bool turn, str
             system("clear");
             cout << "Turn of player B\n";
             print(x,y,B,A,BS,AS);
+                cout << endl << endl;
+                debugprint(x,y,B,A,BS,AS);
             shot(x,y,A,BS,scoreB);
             system("clear");
             cout << "Turn of player B\n";
             print(x,y,B,A,BS,AS);
+                cout << endl << endl;
+                debugprint(x,y,B,A,BS,AS);
             if(scoreB>=20)
                 break;
             turn=0;
@@ -37,10 +45,14 @@ void mainloop(int x,int y,int **A, int **B, bool **AS, bool **BS, bool turn, str
             system("clear");
             cout << "Turn of player A\n";
             print(x,y,A,B,AS,BS);
+                cout << endl << endl;
+                debugprint(x,y,A,B,BS,AS);
             shot(x,y,B,AS,scoreA);
             system("clear");
             cout << "Turn of player A\n";
             print(x,y,A,B,AS,BS);
+                cout << endl << endl;
+                debugprint(x,y,A,B,BS,AS);
             if(scoreA>=20)
                 break;
             turn=1;
@@ -76,31 +88,51 @@ void deletebooltab(bool **&A, int x)
        delete [] A[i];
 }
 
-bool sanitycheck(int x, int y, int **A, int S[4], ship Ship)
+void insertship(int **D, int S[4], List *list, Ship &ship, int number)
 {
-    if(S[Ship.l-1]<1)
+    add(list,ship);
+    if(ship.p=='H')
+    {
+        for(int i=ship.x;i<ship.x+ship.l;i++)
+            D[ship.y][i]=number;
+        S[ship.l-1]--;
+        return;
+    }
+    else if(ship.p=='V')
+    {
+        for(int i=ship.y;i<ship.y+ship.l;i++)
+            D[i][ship.x]=number;
+        S[ship.l-1]--;
+        return;
+    }
+    return;
+}
+
+bool sanitycheck(int x, int y, int **A, int S[4], Ship ship)
+{
+    if(S[ship.l-1]<1)
         return 0;
-    if(Ship.x<0)
+    if(ship.x<0)
         return 0;
 
-    if(Ship.p=='H')
+    if(ship.p=='H')
     {
-        if(Ship.x+Ship.l>x)
+        if(ship.x+ship.l>x)
             return 0;
-        for(int i=Ship.x;i<Ship.x+Ship.l;i++)
+        for(int i=ship.x;i<ship.x+ship.l;i++)
         {
-            if(A[Ship.y][i]>=1 || A[Ship.y-1][i]>=1 || A[Ship.y][i-1]>=1 || A[Ship.y+1][i]>=1 || A[Ship.y][i+1]>=1)
+            if(A[ship.y][i]>=1 || A[ship.y-1][i]>=1 || A[ship.y][i-1]>=1 || A[ship.y+1][i]>=1 || A[ship.y][i+1]>=1)
                 return 0;
         }
         return 1;
     }
-    else if(Ship.p=='V')
+    else if(ship.p=='V')
     {
-        if(Ship.y+Ship.l>y)
+        if(ship.y+ship.l>y)
             return 0;
-        for(int i=Ship.y;i<Ship.y+Ship.l;i++)
+        for(int i=ship.y;i<ship.y+ship.l;i++)
         {
-            if(A[i][Ship.x]>=1 || A[i-1][Ship.x]>=1 || A[i][Ship.x-1]>=1 || A[i+1][Ship.x]>=1 || A[i][Ship.x+1]>=1)
+            if(A[i][ship.x]>=1 || A[i-1][ship.x]>=1 || A[i][ship.x-1]>=1 || A[i+1][ship.x]>=1 || A[i][ship.x+1]>=1)
                 return 0;
         }
         return 1;

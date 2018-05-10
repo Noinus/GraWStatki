@@ -6,9 +6,13 @@ CONFIG -= qt
 SOURCES += main.cpp \
     ui.cpp \
     ai.cpp \
-    core.cpp
+    core.cpp \
+    list.cpp
 
 HEADERS += \
     ai.h \
     ui.h \
-    core.h
+    core.h \
+    ship.h \
+    list.h \
+    debug.h

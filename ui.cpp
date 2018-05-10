@@ -5,6 +5,7 @@
 #include <ui.h>
 #include <ai.h>
 #include <core.h>
+#include <list.h>
 
 using namespace std;
 
@@ -47,6 +48,8 @@ void print(int x, int y, int **A, int **B, bool **AS, bool **BS)
         }
         cout << "     ";
         cout << i;
+        if(i<10)
+            cout << " ";
         for(int j=1;j<x+1;j++)
         {
             if(AS[i-1][j-1]==0)
@@ -73,63 +76,47 @@ void checkpassword(string pass)
     }while(password!=pass);
 }
 
-void insertship(int **D, int S[4], ship &Ship)
+void insert(int x, int y, int **D, List *list, int S[4])
 {
-    if(Ship.p=='H')
-    {
-        for(int i=Ship.x;i<Ship.x+Ship.l;i++)
-            D[Ship.y][i]=Ship.l;
-        S[Ship.l-1]--;
-        return;
-    }
-    else if(Ship.p=='V')
-    {
-        for(int i=Ship.y;i<Ship.y+Ship.l;i++)
-            D[i][Ship.x]=Ship.l;
-        S[Ship.l-1]--;
-        return;
-    }
-    return;
-}
-
-void insert(int **D, int S[4])
-{
-    ship Ship;
+    int number = 1;
+    Ship ship;
     bool heh=1;
     do{
         cout << "Remaining ships:\n";
         cout <<"ships:"<< S[0] << " " << S[1] << " " << S[2] << " " << S[3] << endl;
         cout << "enter new ship:" << endl;
-        string R;
-        cin >> R;
-        char param = R[0];
-        int x = R[1]-65;
-        int y = R[2]-49;
-        int l = R[3]-48;
 
-        cout <<"debug input:"<< param << " " << x << " " << y << " " << l << endl;
+        char param;
+        char xsr;
+        int ys;
+        int ls;
+
+        cin >> param >> xsr >> ys >> ls;
+        int xs=xsr-64;
+
+        cout <<"debug input:"<< param << " " << xs << " " << ys << " " << ls << endl;
 
             if(param!='H' && param!='V')
             {cout << "Wrong input! Try again\n";heh=1; continue;}
-            if(x<0 || x>8)
+            if(xs<1 || xs>x+1)
             {cout << "Wrong input! Try again\n";heh=1; continue;}
-            if(y<0 || y>8)
+            if(ys<1 || ys>y+1)
             {cout << "Wrong input! Try again\n";heh=1; continue;}
-            if(l<0 || l>4)
+            if(ls<0 || ls>4)
             {cout << "Wrong input! Try again\n";heh=1; continue;}
 
-        Ship={param,x,y,l};
+        ship={number,ls,param,xs,ys,ls};
 
-        heh=sanitycheck(x,y,D,S,Ship);
+        heh=sanitycheck(x,y,D,S,ship);
         if(!heh)
             cout << "You cannot place ship here! Try again\n";
     }while(!heh);
-    insertship(D,S,Ship);
+    insertship(D,S,list,ship,number);
 
     cout <<"ships:"<< S[0] << " " << S[1] << " " << S[2] << " " << S[3] << endl;
 }
 
-void userinsert(int x, int y,int **A, int **B, bool **AS, bool **BS, int S[4])
+void userinsert(int x, int y,int **A, int **B, bool **AS, bool **BS, List *list, int S[4])
 {
     while(true)
     {
@@ -138,14 +125,14 @@ void userinsert(int x, int y,int **A, int **B, bool **AS, bool **BS, int S[4])
         cin >> choice;
         if(choice=='r')
         {
-            makeboard(x,y,A,S);
+            makeboard(x,y,A,list,S);
             return;
         }
         else if(choice=='m')
         {
             do
             {
-                insert(A,S);
+                insert(x,y,A,list,S);
                 system("clear");
                 print(x,y,A,B,AS,BS);
                 if(S[0]==0 && S[1]==0 && S[2]==0 && S[3]==0)
