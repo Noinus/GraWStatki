@@ -5,8 +5,10 @@ CONFIG -= qt
 
 SOURCES += main.cpp \
     ui.cpp \
-    ai.cpp
+    ai.cpp \
+    core.cpp
 
 HEADERS += \
     ai.h \
-    ui.h
+    ui.h \
+    core.h

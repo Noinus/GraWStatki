@@ -4,8 +4,9 @@
 #endif // AI_H
 #include <ai.h>
 #include <ui.h>
+#include <core.h>
 
-void randomship(int D[8][8],bool t, int S[4], int len)
+void randomship(int x, int y, int **D, int S[4], int len)
 {
     ship Ship;
     bool heh=1;
@@ -15,25 +16,25 @@ void randomship(int D[8][8],bool t, int S[4], int len)
             param='H';
         else
             param='V';
-        int x = rand()%8;
-        int y = rand()%8;
-        int l = len;
+        int xs = rand()%x+1;
+        int ys = rand()%y+1;
+        int ls = len;
 
-        //cout <<"debug input:"<< param << " " << x << " " << y << " " << l << endl;
-        //cout <<"shipssssss:"<< S[0] << " " << S[1] << " " << S[2] << " " << S[3] << endl;
+        cout <<"debug input:"<< param << " " << xs << " " << ys << " " << ls << endl;
+        cout <<"shipssssss:"<< S[0] << " " << S[1] << " " << S[2] << " " << S[3] << endl;
 
             if(param!='H' && param!='V')
             {heh=1; continue;}
-            if(x<0 || x>8)
+            if(xs<1 || xs>x+1)
             {heh=1; continue;}
-            if(y<0 || y>8)
+            if(ys<1 || ys>y+1)
             {heh=1; continue;}
-            if(l<0 || l>4)
+            if(ls<0 || ls>4)
             {heh=1; continue;}
 
-        Ship={param,x,y,l};
+        Ship={param,xs,ys,ls};
 
-        heh=sanitycheck(t,D,S,Ship);
+        heh=sanitycheck(x,y,D,S,Ship);
 
         //if(heh)
         //    cout << "Error! Cannot insert ship " << param << x << y << l << endl;
@@ -46,15 +47,15 @@ void randomship(int D[8][8],bool t, int S[4], int len)
     insertship(D,S,Ship);
 }
 
-void makeboard(int A[][8], bool t, int S[4])
+void makeboard(int x, int y, int **A, int S[4])
 {
     int i=4;
 
     do
     {
-        randomship(A,t,S,i);
+        randomship(x,y,A,S,i);
         //cout <<"ships:"<< S[0] << " " << S[1] << " " << S[2] << " " << S[3] << endl;
-        //print(A,B,AS,BS);
+        //print(x,y,A,B,AS,BS);
         if(S[0]<1 && S[1]<1 && S[2]<1 && S[3]<1)
             break;
         if(S[i-1]<1)

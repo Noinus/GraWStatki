@@ -14,24 +14,21 @@ struct ship{
     int y;
     int l;
 };
-void mainloop(int A[8][8],int B[8][8],bool AS[8][8],bool BS[8][8], bool turn, string PassA, string PassB);
 
-void print(int A[8][8],int B[8][8],bool AS[8][8],bool BS[8][8]);
+void print(int x, int y, int **A, int **B, bool **AS, bool **BS);
 
 void checkpassword(string pass);
 
-bool sanitycheck(bool t, int A[8][8],int S[4], ship Ship);
+void insertship(int **D, int S[4], ship &Ship);
 
-void insertship(int D[8][8], int S[4], ship &Ship);
+void insert(int **D, int S[4]);
 
-void insert(int D[8][8], bool t,int S[4]);
+void userinsert(int x, int y, int **A, int **B, bool **AS, bool **BS, int S[4]);
 
-void userinsert(int A[8][8], int B[8][8], bool AS[8][8], bool BS[8][8], bool t,int S[4]);
+void randomboard(int **T);
 
-void randomboard(int T[][8]);
+void shot(int x, int y, int **A, bool **AS, int &score);
 
-void shot(int A[8][8], bool AS[8][8], int &score);
+bool checksunk(int **A, bool **AS);
 
-bool checksunk(int A[8][8], bool AS[8][8]);
-
-void endgame(int A[8][8], int B[8][8], bool turn, int scoreA, int scoreB);
+void endgame(int **A, int **B, bool turn, int scoreA, int scoreB);

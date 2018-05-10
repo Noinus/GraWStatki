@@ -7,17 +7,19 @@
 **/
 #include <ai.h>
 #include <ui.h>
+#include <core.h>
 
 //Game parameters
 bool ai=0;              //1-human vs machine  0-human vs human
-bool t=0;               //1-ships are allowed to touch  0-ships are not allowed to touch
 int Aas[4]={4,3,2,1};   //Number of ships for player A
 int Bas[4]={4,3,2,1};   //Number of ships for player B
 
-int A[8][8];           //table of ships player A
-int B[8][8];           //table of ships player B
-bool AS[8][8];          //table of shots player A
-bool BS[8][8];          //table of shots player B
+int x=10, y=10;
+
+int ** A = new int * [y+2];
+int ** B = new int * [y+2];
+bool ** AS = new bool * [y];
+bool ** BS = new bool * [y];
 
 string PassA;           //Password of Player A
 string PassB;           //Password of Player B
@@ -26,7 +28,12 @@ bool turn=0;            //0 - player A,   1 - player B
 
 int main()
 {
+    maketab(A,x,y);
+    maketab(B,x,y);
+    makebooltab(AS,x,y);
+    makebooltab(BS,x,y);
     srand(time(NULL));
+
     cout<<"Set password for Player A: ";
     cin >> PassA;
     system("clear");
@@ -36,16 +43,22 @@ int main()
         cin >> PassB;
         system("clear");
     }
-    print(A,B,AS,BS);
+
+    print(x,y,A,B,AS,BS);
 
     cout << "Time for player A to insert!" << endl;
-    userinsert(A,B,AS,BS,t,Aas);
+    userinsert(x,y,A,B,AS,BS,Aas);
 
     system("clear");
 
-    makeboard(B,t,Bas);
+    makeboard(x,y,B,Bas);
 
-    mainloop(A,B,AS,BS,turn,PassA,PassB);
+    mainloop(x,y,A,B,AS,BS,turn,PassA,PassB);
 
+    deletetab(A,x);
+    deletetab(B,x);
+    deletebooltab(AS,x);
+    deletebooltab(BS,x);
+    cout << "unexpected error\n";
     return 0;
 }

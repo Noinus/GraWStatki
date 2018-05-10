@@ -7,6 +7,6 @@
 
 using namespace std;
 
-void randomship(int D[8][8],bool t, int S[4], int len);
+void randomship(int x, int y, int **D, int S[4], int len);
 
-void makeboard(int A[8][8], bool t, int S[4]);
+void makeboard(int x, int y, int **A, int S[4]);
