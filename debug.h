@@ -44,10 +44,10 @@ void debugprint(int x, int y, int **A, int **B, bool **AS, bool **BS)
         {
             if(AS[i-1][j-1]==0)
             {
-                if(B[i][j]==1)
-                    cout <<" " << B[i][j];
-                else
+                if(B[i][j]==0)
                     cout <<"  ";
+                else
+                    cout <<" " << B[i][j];
             }
             else
             {
@@ -65,7 +65,7 @@ void printList(List *list)
 {
     while(list!=0)
     {
-        cout << list->head->ship.p << " " << list->head->ship.x << " " << list->head->ship.y << " " << list->head->ship.l << endl;
+        cout << list->ship.p << " " << list->ship.x << " " << list->ship.y << " " << list->ship.l << "   " << list->ship.number << " " << list->ship.hp << endl;
         list = list->n;
     }
 }

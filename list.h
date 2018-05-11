@@ -3,27 +3,16 @@
 
 #include <ship.h>
 
-struct lShip
-{
-    Ship ship;
-    lShip *n;
-};
-
-
 struct List
 {
-    lShip *head;
-    lShip *n;
+    Ship ship;
+    List *n;
 };
 
 List *createList();
 
-void add(List *list, Ship ship);
+int add(List *list, Ship ship);
 
-lShip *ShipTolShip(Ship ship, lShip *n);
-
-void clearList(lShip *adr);
-
-lShip * addAfter(lShip *adr, Ship ship);
+void clearList(List *list);
 
 #endif // LIST_H

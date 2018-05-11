@@ -1,7 +1,7 @@
 #ifndef UI_H
 #define UI_H
 
-#endif // UI_H
+
 #include <iostream>
 #include <fstream>
 #include <string>
@@ -19,8 +19,12 @@ void userinsert(int x, int y, int **A, int **B, bool **AS, bool **BS, List *list
 
 void randomboard(int **T);
 
-void shot(int x, int y, int **A, bool **AS, int &score);
+void outline(Ship ship, bool **AS);
 
-bool checksunk(int **A, bool **AS);
+bool checksunk(List *list, bool **AS, int number);
 
-void endgame(int **A, int **B, bool turn, int scoreA, int scoreB);
+int shot(int x, int y, int **A, bool **AS, List *list, int &score);
+
+void endgame(int x, int y,int **A, int **B, bool turn);
+
+#endif // UI_H
