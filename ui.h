@@ -1,34 +1,30 @@
 #ifndef UI_H
 #define UI_H
 
-#endif // UI_H
 
 #include <iostream>
 #include <fstream>
+#include <string>
+#include <list.h>
 
 using namespace std;
-
-struct ship{
-    char p;
-    int x;
-    int y;
-    int l;
-};
 
 void print(int x, int y, int **A, int **B, bool **AS, bool **BS);
 
 void checkpassword(string pass);
 
-void insertship(int **D, int S[4], ship &Ship);
+void insert(int x, int y, int **D, List *list, int S[4]);
 
-void insert(int **D, int S[4]);
-
-void userinsert(int x, int y, int **A, int **B, bool **AS, bool **BS, int S[4]);
+void userinsert(int x, int y, int **A, int **B, bool **AS, bool **BS, List *list, int S[4]);
 
 void randomboard(int **T);
 
-void shot(int x, int y, int **A, bool **AS, int &score);
+void outline(Ship ship, bool **AS);
 
-bool checksunk(int **A, bool **AS);
+bool checksunk(List *list, bool **AS, int number);
 
-void endgame(int **A, int **B, bool turn, int scoreA, int scoreB);
+int shot(int x, int y, int **A, bool **AS, List *list, int &score);
+
+void endgame(int x, int y,int **A, int **B, bool turn);
+
+#endif // UI_H

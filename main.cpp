@@ -8,18 +8,20 @@
 #include <ai.h>
 #include <ui.h>
 #include <core.h>
+#include <list.h>
 
 //Game parameters
-bool ai=0;              //1-human vs machine  0-human vs human
-int Aas[4]={4,3,2,1};   //Number of ships for player A
-int Bas[4]={4,3,2,1};   //Number of ships for player B
+bool ai=1;              //1-human vs machine  0-human vs human
+bool safegame=0;        //1-require password before turn
+int Aas[4]={0,5,0,0};   //Number of ships for player A
+int Bas[4]={0,5,0,0};   //Number of ships for player B
 
-int x=10, y=10;
+int x=6, y=6;
 
 int ** A = new int * [y+2];
 int ** B = new int * [y+2];
-bool ** AS = new bool * [y];
-bool ** BS = new bool * [y];
+bool ** AS = new bool * [y+2];
+bool ** BS = new bool * [y+2];
 
 string PassA;           //Password of Player A
 string PassB;           //Password of Player B
@@ -34,31 +36,40 @@ int main()
     makebooltab(BS,x,y);
     srand(time(NULL));
 
-    cout<<"Set password for Player A: ";
-    cin >> PassA;
-    system("clear");
-    if(ai==0)
+    List *listA;
+    List *listB;
+    listA = createList();
+    listB = createList();
+
+    if(safegame)
     {
-        cout<<"Set password for Player B: ";
-        cin >> PassB;
+        cout<<"Set password for Player A: ";
+        cin >> PassA;
         system("clear");
+        if(ai==0)
+        {
+            cout<<"Set password for Player B: ";
+            cin >> PassB;
+            system("clear");
+        }
     }
 
     print(x,y,A,B,AS,BS);
 
     cout << "Time for player A to insert!" << endl;
-    userinsert(x,y,A,B,AS,BS,Aas);
+    userinsert(x,y,A,B,AS,BS,listA,Aas);
 
     system("clear");
 
-    makeboard(x,y,B,Bas);
+    makeboard(x,y,B,listB,Bas);
 
-    mainloop(x,y,A,B,AS,BS,turn,PassA,PassB);
+    mainloop(x,y,A,B,AS,BS,listA,listB,ai,turn,safegame,PassA,PassB);
 
     deletetab(A,x);
     deletetab(B,x);
     deletebooltab(AS,x);
     deletebooltab(BS,x);
-    cout << "unexpected error\n";
+    clearList(listA);
+    clearList(listB);
     return 0;
 }
