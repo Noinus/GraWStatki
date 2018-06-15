@@ -4,9 +4,9 @@
 #include <list.h>
 using namespace std;
 
-void randomship(int x, int y, int **D, List *list, int S[4], int len);
+void randomship(int x, int y, int **D, List *list, int *S, int len);
 
-void makeboard(int x, int y, int **A, List *list, int S[4]);
+void makeboard(int x, int y, int **A, List *list, int *S, int type);
 
 void aishot(int x,int y,int **A, bool **AS, List *list,int &score);
 

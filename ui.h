@@ -13,9 +13,9 @@ void print(int x, int y, int **A, int **B, bool **AS, bool **BS);
 
 void checkpassword(string pass);
 
-void insert(int x, int y, int **D, List *list, int S[4]);
+void insert(int x, int y, int **D, List *list, int *S, int type);
 
-void userinsert(int x, int y, int **A, int **B, bool **AS, bool **BS, List *list, int S[4]);
+void userinsert(int x, int y, int **A, int **B, bool **AS, bool **BS, List *list, int *S, int type);
 
 void randomboard(int **T);
 

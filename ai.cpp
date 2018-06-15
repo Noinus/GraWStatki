@@ -7,7 +7,7 @@
 #include <list.h>
 #include <stack>
 
-void randomship(int x, int y, int **D,List *list, int S[4], int len)
+void randomship(int x, int y, int **D,List *list, int *S, int len)
 {
     Ship ship;
     int number = 1;
@@ -22,16 +22,14 @@ void randomship(int x, int y, int **D,List *list, int S[4], int len)
         int ys = rand()%y+1;
         int ls = len;
 
-        //cout <<"debug input:"<< param << " " << xs << " " << ys << " " << ls << endl;
-        //cout <<"shipssssss:"<< S[0] << " " << S[1] << " " << S[2] << " " << S[3] << endl;
+        cout <<"debug input:"<< param << " " << xs << " " << ys << " " << ls << endl;
+        cout <<"shipssssss:"<< S[0] << " " << S[1] << " " << S[2] << " " << S[3] << endl;
 
             if(param!='H' && param!='V')
             {heh=1; continue;}
             if(xs<1 || xs>x+1)
             {heh=1; continue;}
             if(ys<1 || ys>y+1)
-            {heh=1; continue;}
-            if(ls<0 || ls>4)
             {heh=1; continue;}
 
         ship={number,ls,param,xs,ys,ls};
@@ -49,16 +47,18 @@ void randomship(int x, int y, int **D,List *list, int S[4], int len)
     insertship(D,S,list,ship,number);
 }
 
-void makeboard(int x, int y, int **A, List *list, int S[4])
+void makeboard(int x, int y, int **A, List *list, int *S, int type)
 {
-    int i=4;
+    int i=type;
 
     do
     {
         randomship(x,y,A,list,S,i);
-        //cout <<"ships:"<< S[0] << " " << S[1] << " " << S[2] << " " << S[3] << endl;
-        //print(x,y,A,B,AS,BS);
-        if(S[0]<1 && S[1]<1 && S[2]<1 && S[3]<1)
+        cout <<"ships:"<< S[0] << " " << S[1] << " " << S[2] << " " << S[3] << endl;
+        int check=0;
+        for(int i=0;i<type;i++)
+            check+=S[i];
+        if(check<=0)
             break;
         if(S[i-1]<1)
             i--;

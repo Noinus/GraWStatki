@@ -1,5 +1,6 @@
 #ifndef DEBUG_H
 #define DEBUG_H
+
 #include <list.h>
 
 void debugprint(int x, int y, int **A, int **B, bool **AS, bool **BS)

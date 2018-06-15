@@ -76,14 +76,17 @@ void checkpassword(string pass)
     }while(password!=pass);
 }
 
-void insert(int x, int y, int **D, List *list, int S[4])
+void insert(int x, int y, int **D, List *list, int *S, int type)
 {
     int number = 1;
     Ship ship;
     bool heh=1;
     do{
         cout << "Remaining ships:\n";
-        cout <<"ships:"<< S[0] << " " << S[1] << " " << S[2] << " " << S[3] << endl;
+        cout << "ships:";
+        for (int i=0;i<type;i++)
+            cout << S[i] << " ";
+        cout << endl;
         cout << "enter new ship:" << endl;
 
         char param;
@@ -102,7 +105,7 @@ void insert(int x, int y, int **D, List *list, int S[4])
             {cout << "Wrong input! Try again\n";heh=1; continue;}
             if(ys<1 || ys>y+1)
             {cout << "Wrong input! Try again\n";heh=1; continue;}
-            if(ls<0 || ls>4)
+            if(ls<0 || ls>type)
             {cout << "Wrong input! Try again\n";heh=1; continue;}
 
         ship={number,ls,param,xs,ys,ls};
@@ -113,29 +116,35 @@ void insert(int x, int y, int **D, List *list, int S[4])
     }while(!heh);
     insertship(D,S,list,ship,number);
 
-    cout <<"ships:"<< S[0] << " " << S[1] << " " << S[2] << " " << S[3] << endl;
+    cout << "ships:";
+    for (int i=0;i<type;i++)
+        cout << S[i] << " ";
+    cout << endl;
 }
 
-void userinsert(int x, int y,int **A, int **B, bool **AS, bool **BS, List *list, int S[4])
+void userinsert(int x, int y,int **A, int **B, bool **AS, bool **BS, List *list, int *S, int type)
 {
     while(true)
     {
         char choice;
-        cout << "Do you want to insert your ships manually, or randomly [m/r]?";
+        cout << "Do you want to insert your ships manually, or randomly [M/R]?";
         cin >> choice;
-        if(choice=='r')
+        if(choice=='R')
         {
-            makeboard(x,y,A,list,S);
+            makeboard(x,y,A,list,S,type);
             return;
         }
-        else if(choice=='m')
+        else if(choice=='M')
         {
             do
             {
-                insert(x,y,A,list,S);
+                insert(x,y,A,list,S,type);
                 system("clear");
                 print(x,y,A,B,AS,BS);
-                if(S[0]==0 && S[1]==0 && S[2]==0 && S[3]==0)
+                int check =0;
+                for(int i=0;i<type;i++)
+                    check+=S[i];
+                if(check==0)
                     break;
             }while(true);
             return;
